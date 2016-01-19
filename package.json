@@ -1,0 +1,23 @@
+{
+  "name": "iCampusFood",
+  "version": "0.0.7",
+  "dependencies": {
+    "body-parser": "~1.8.0",
+    "compression": "~1.0.11",
+    "connect-flash": "~0.1.1",
+    "ejs": "~1.0.0",
+    "express": "~4.8.8",
+    "express-session": "~1.7.6",
+    "jsonwebtoken": "^5.5.4",
+    "method-override": "~2.2.0",
+    "mongoose": "~3.8.15",
+    "morgan": "~1.3.0",
+    "node-yelp": "0.0.3",
+    "passport": "~0.2.1",
+    "passport-facebook": "2.0.0",
+    "passport-facebook-token": "^3.1.0",
+    "passport-local": "~1.0.0",
+    "bluebird": "~2.2.2",
+    "request": "~2.40.0"
+  }
+}
