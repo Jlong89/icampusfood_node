@@ -21,7 +21,7 @@ var PostSchema = new Schema({
 		ref: 'Foodloc',
 		required: 'A location is required for a post'
 	},
-	comment: {
+	comments: {
 		type: String
 	},
 	rating: {

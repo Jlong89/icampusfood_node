@@ -30,18 +30,24 @@ module.exports = function(app) {
 		failureRedirect:'/rest/users/facebook/error'
 	}));
 
+	/*
 	apiRoutes.get('/signin/facebook/callback', passport.authenticate('facebook', {
-		failureRedirect: '/rest/users/facebook/error',
-		successRedirect: '/rest/users/facebook/success'
-	}));
+		successRedirect: '/rest/users/facebook/success',
+		failureRedirect: '/rest/users/facebook/error'
+		
+	}));*/
 
-	apiRoutes.get('/facebook/success', function(req, res) {
-		//console.log(JSON.stringify(req.body.user));
-		res.json(req.user);
-	});
-
-	apiRoutes.get('/facebook/error', function(req, res) {
-		res.json({error: 'error signin into facebook'});
+	apiRoutes.get('/signin/facebook/callback', function(req, res, next) {
+		passport.authenticate('facebook', function(err, user, info) {
+		    if (err) { return next(err); }
+		    if (!user) { return res.status(400).json('user not found'); }
+		    //console.log('!!!!!!!!!!'+JSON.stringify(user));
+		    return res.status(200).json({success: true, 
+		    							user: {
+		    								username: user.username,
+		    								accessToken: user.providerData.accessToken
+		    							}});
+		  })(req, res, next);
 	});
 	
 	// route middleware to verify a token... important!!! middleware mounted after this need to pass through this verification! everything before this

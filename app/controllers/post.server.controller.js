@@ -125,15 +125,17 @@ exports.read = function(req, res) {
 exports.update = function(req, res) {
 	//update fields
 	var post = req.post;
-	post.rating = req.body.rating;
-	post.comment = req.body.comment;
-	post.title = req.body.title;
-	//try saving
+	if(req.body.rating !== undefined && !isNaN(req.body.rating))  post.rating = req.body.rating;
+	if(req.body.comments !== undefined) post.comment = req.body.comments;
+	if(req.body.title !== undefined) post.title = req.body.title;
+	//try saving updated post
 	post.save(function(err) {
 		if(err) {
 			return next(err);
 		} else {
-			res.json(post);
+			res.json({success: true, 
+					updatedPost: post
+			});
 		}
 	});
 };
@@ -146,7 +148,9 @@ exports.delete = function(req, res, next) {
 			return next(err);
 		} else {
 
-			res.json(req.post);
+			res.json({success: true,
+				deletedPost:
+				req.post});
 		}
 	});
 };

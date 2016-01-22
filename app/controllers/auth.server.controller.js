@@ -42,10 +42,6 @@ exports.authenticate = function(req, res, next, secret) {
 	        		next();
 	        	}
 	        });
-	        /*
-	        req.userid = decoded._doc._id;    
-	        //console.log('decoded user:' +JSON.stringify(decoded));
-	        next();*/
 	      }
 	    });
 

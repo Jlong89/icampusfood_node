@@ -46,7 +46,7 @@ exports.signup = function(req, res, next) {
 	    		res.status(200).json({ success: true,
 	    				message: 'user signedup successfully',
 	    				token: newToken,
-	    				newUser: user
+	    				newUser: user.username
 	    			 });
 			});
 		} else {
@@ -55,7 +55,7 @@ exports.signup = function(req, res, next) {
 				success: true,
 				message: 'user already exists',
 				token: newToken,
-				user: user
+				user: user.username
 			})
 		}
 	});	
@@ -87,15 +87,13 @@ exports.signin = function(req, res) {
 	        // if user is found and password is right
 	        // create a token
 	        var newToken = auth.getToken(user, req.params.secret);
-	        //remove password and salt before returning user object in response
-	        delete user.password; delete user.salt;
 	        //console.log('!!!!!!!!!!!!!!! '+user);
 	        // return the information including token as JSON
 	        res.json({
 	          success: true,
 	          message: 'this is your login token!',
 	          token: newToken,
-	          user: user
+	          user: user.username
 	        });
 	      }   
     	}
@@ -122,10 +120,17 @@ exports.saveOAuthUserProfile = function(req, profile, done) {
 				// Try saving the new user document
 				user.save(function(err) {
 					// Continue to the next middleware
+					if(err) {
+						var message = getErrorMessage(err);
+
+						return res.redirect('/rest/users/facebook/error');
+					}
+					
 					return done(err, user);
 				});
 			} else {
 				// Continue to the next middleware
+				//console.log('!!!!!!!!'+JSON.stringify(user));
 				return done(err, user);
 			}
 		}

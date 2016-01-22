@@ -113,7 +113,7 @@ exports.nearby = function(req, res, next) {
 exports.insertNewLoc = function(req, res) {
 	var reqBody = req.body;
 	//create the new location object to be inserted
-	var loc = new Foodloc({name: reqBody.name, foodType: reqBody.foodType, loc: reqBody.location, avgFoodRating: reqBody.avgFoodRating, 
+	var loc = new Foodloc({name: reqBody.name, foodType: reqBody.foodType, loc: reqBody.location, avgFoodRating: reqBody.rating, 
 		 hours: reqBody.hours, address: reqBody.address
 	});
 
@@ -124,7 +124,7 @@ exports.insertNewLoc = function(req, res) {
 			// Use the error handling method to get the error message
 			var message = getErrorMessage(err);
 
-			res.status(400).json({error: message});
+			res.status(400).json({success: false, error: message});
 			return;
 		}
 		console.log('new foodloc '+loc.name+' saved successfully');
